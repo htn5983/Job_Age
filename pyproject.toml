@@ -1,0 +1,20 @@
+[project]
+name = "job-age"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "htn5983", email = "a0925072598@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "mariadb>=1.1.14",
+    "requests>=2.34.2",
+]
+
+[project.scripts]
+job-age = "job_age:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
