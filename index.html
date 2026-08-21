@@ -1,0 +1,179 @@
+<!doctype html> 
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Age | 臺中市求職年齡觀察</title>
+  <style>
+    :root {
+      --ink: #17252a;
+      --muted: #68777b;
+      --paper: #f6f4ef;
+      --panel: #fffdf8;
+      --line: #dedfd8;
+      --coral: #e76f51;
+      --coral-soft: #f8ded5;
+      --teal: #217c7e;
+      --teal-soft: #dceeed;
+      --yellow: #f2c14e;
+      --shadow: 0 18px 45px rgba(23, 37, 42, .08);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .23; background-image: radial-gradient(#c9c6ba .7px, transparent .7px); background-size: 12px 12px; mask-image: linear-gradient(to bottom, #000, transparent 65%); }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: auto; position: relative; }
+    header { padding: 52px 0 35px; border-bottom: 1px solid var(--line); }
+    .topline { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; }
+    .kicker { color: var(--teal); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { font-family: Georgia, "Noto Serif TC", serif; font-size: clamp(38px, 6vw, 74px); line-height: .98; letter-spacing: 0; margin: 13px 0 18px; max-width: 780px; }
+    .intro { margin: 0; max-width: 630px; color: var(--muted); font-size: 16px; line-height: 1.9; }
+    .date-stamp { min-width: 160px; padding: 14px 16px; border-left: 3px solid var(--coral); background: var(--panel); box-shadow: var(--shadow); }
+    .date-stamp small { display: block; color: var(--muted); font-size: 11px; margin-bottom: 5px; }
+    .date-stamp strong { font-family: Georgia, serif; font-size: 24px; }
+    main { padding: 32px 0 70px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 30px; }
+    .stat { padding: 22px 24px; background: var(--panel); border: 1px solid var(--line); min-height: 128px; }
+    .stat:nth-child(2) { background: var(--teal-soft); border-color: transparent; }
+    .stat:nth-child(3) { background: var(--coral-soft); border-color: transparent; }
+    .stat-label { color: var(--muted); font-size: 13px; }
+    .stat-value { display: block; margin-top: 10px; font-family: Georgia, serif; font-size: 35px; font-weight: 700; }
+    .stat-note { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(290px, .65fr); gap: 18px; align-items: start; }
+    .panel { background: var(--panel); border: 1px solid var(--line); padding: 25px; }
+    .panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 24px; }
+    h2 { margin: 0; font-size: 20px; letter-spacing: 0; }
+    .eyebrow { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .legend { display: flex; gap: 13px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .dot { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; background: var(--coral); }
+    .dot.teal { background: var(--teal); }
+    .bars { display: grid; gap: 10px; }
+    .bar-row { display: grid; grid-template-columns: 72px 1fr; align-items: center; gap: 14px; }
+    .bar-label { color: var(--muted); font-size: 12px; text-align: right; }
+    .bar-track { display: flex; gap: 3px; height: 22px; }
+    .bar { min-width: 2px; height: 100%; transition: width .45s ease; }
+    .bar.male { background: var(--teal); }
+    .bar.female { background: var(--coral); }
+    .bar-value { display: flex; justify-content: space-between; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .insight { border-top: 3px solid var(--yellow); padding-top: 15px; margin-top: 25px; }
+    .insight strong { display: block; font-family: Georgia, serif; font-size: 28px; }
+    .insight p { color: var(--muted); line-height: 1.7; font-size: 13px; margin: 8px 0 0; }
+    .method { display: grid; gap: 12px; }
+    .method-item { display: grid; grid-template-columns: 27px 1fr; gap: 11px; align-items: start; }
+    .method-num { display: grid; place-items: center; width: 27px; height: 27px; background: var(--ink); color: #fff; border-radius: 50%; font-size: 12px; font-weight: 700; }
+    .method-item strong { display: block; font-size: 14px; }
+    .method-item span { display: block; color: var(--muted); font-size: 12px; line-height: 1.6; margin-top: 3px; }
+    .data-panel { margin-top: 18px; }
+    .tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    input, button { font: inherit; }
+    input { width: 170px; padding: 9px 11px; border: 1px solid var(--line); background: #fff; color: var(--ink); outline-color: var(--teal); }
+    button { border: 1px solid var(--line); background: transparent; color: var(--muted); padding: 8px 12px; cursor: pointer; font-size: 12px; }
+    button:hover, button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .table-wrap { overflow-x: auto; margin: 14px -25px -25px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 13px 25px; text-align: left; border-top: 1px solid var(--line); }
+    th { color: var(--muted); font-size: 11px; font-weight: 600; background: #faf9f4; }
+    td:last-child { text-align: right; font-family: Georgia, serif; font-size: 16px; font-weight: 700; }
+    footer { color: var(--muted); border-top: 1px solid var(--line); padding: 20px 0 35px; font-size: 12px; line-height: 1.8; }
+    footer a { color: var(--teal); }
+    .empty { color: var(--muted); text-align: center; padding: 28px; }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 28px, 600px); }
+      header { padding-top: 32px; }
+      .topline { display: block; }
+      .date-stamp { display: inline-block; margin-top: 24px; }
+      .stats, .grid { grid-template-columns: 1fr; }
+      .stats { gap: 9px; }
+      .stat { min-height: 0; padding: 17px 19px; }
+      .stat-value { font-size: 30px; }
+      .panel { padding: 19px; }
+      .panel-head { display: block; }
+      .legend { margin-top: 15px; }
+      .table-wrap { margin-left: -19px; margin-right: -19px; }
+      th, td { padding-left: 19px; padding-right: 19px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topline">
+        <div>
+          <div class="kicker">Taichung · Job Age</div>
+          <h1>誰正在找工作？<br><span style="color: var(--coral)">從年齡看見求職現場</span></h1>
+          <p class="intro">把臺中市就業服務的月資料，整理成一眼能讀懂的年齡觀察。數值代表各年齡層的新登記求職人數，讓政策與職涯討論有一個更具體的起點。</p>
+        </div>
+        <div class="date-stamp"><small>資料更新月份</small><strong>2026.06</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="stats" aria-label="資料摘要">
+      <div class="stat"><span class="stat-label">可辨識年齡分組</span><strong class="stat-value">12 組</strong><span class="stat-note">未滿 15 歲至 65 歲以上</span></div>
+      <div class="stat"><span class="stat-label">年齡分組求職人數</span><strong class="stat-value" id="total-count">36,771</strong><span class="stat-note">男、女分組合計，單位：人</span></div>
+      <div class="stat"><span class="stat-label">最高求職年齡層</span><strong class="stat-value" id="top-group">女 20–24 歲</strong><span class="stat-note" id="top-group-note">3,636 人</span></div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div><h2>不同年齡的求職分布</h2><p class="eyebrow">男女並列比較，數值越長代表新登記人數越多</p></div>
+          <div class="legend"><span><i class="dot teal"></i>男性</span><span><i class="dot"></i>女性</span></div>
+        </div>
+        <div class="bars" id="bars" aria-label="年齡分布長條圖"></div>
+        <div class="insight"><strong>20–29 歲是主要交會帶</strong><p>青年求職者在資料中形成最明顯的高峰；女性 20–24 歲為單一欄位最高值，達 3,636 人。</p></div>
+      </article>
+
+      <aside class="panel">
+        <div class="panel-head"><div><h2>這份資料怎麼來？</h2><p class="eyebrow">Job_Parser.py → Jobdb.py</p></div></div>
+        <div class="method">
+          <div class="method-item"><b class="method-num">1</b><div><strong>取得公開資料</strong><span>由臺中市資料平台 API 讀取最新月資料。</span></div></div>
+          <div class="method-item"><b class="method-num">2</b><div><strong>保留三個欄位</strong><span>整理為「地區、數值、欄位名稱」，方便後續分析。</span></div></div>
+          <div class="method-item"><b class="method-num">3</b><div><strong>寫入資料庫</strong><span>Jobdb.py 將資料更新至 MariaDB 的 job_data 表。</span></div></div>
+        </div>
+        <div class="insight"><strong>臺中市</strong><p>資料週期：月<br>指標：就業服務之求職人數／新登記<br>單位：人</p></div>
+      </aside>
+    </section>
+
+    <section class="panel data-panel">
+      <div class="panel-head">
+        <div><h2>欄位明細</h2><p class="eyebrow">可搜尋欄位名稱，也可只看單一性別</p></div>
+        <div class="tools"><input id="search" type="search" placeholder="搜尋年齡欄位" aria-label="搜尋年齡欄位"><button class="filter active" data-filter="all">全部</button><button class="filter" data-filter="男">男性</button><button class="filter" data-filter="女">女性</button></div>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>地區</th><th>欄位名稱</th><th>數值（人）</th></tr></thead><tbody id="data-table"></tbody></table></div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">資料來源：<a href="https://newdatacenter.taichung.gov.tw/" target="_blank" rel="noreferrer">臺中市政府資料開放平台</a> · API 資源 e0809f39-49eb-4c64-951c-cc3282f8843b<br>本頁為資料視覺化示意，初始數值依 Job_Parser.py 讀取結果整理。</div></footer>
+
+  <script>
+    const ageData = [
+      ["未滿 15 歲", 0, 1], ["15–19 歲", 787, 961], ["20–24 歲", 3295, 3636],
+      ["25–29 歲", 2938, 3025], ["30–34 歲", 1635, 2261], ["35–39 歲", 1343, 1794],
+      ["40–44 歲", 1257, 1811], ["45–49 歲", 1390, 2242], ["50–54 歲", 1136, 1783],
+      ["55–59 歲", 898, 1531], ["60–64 歲", 795, 983], ["65 歲以上", 576, 693]
+    ];
+    const records = ageData.flatMap(([age, male, female]) => [["臺中市", `男_${age}`, male], ["臺中市", `女_${age}`, female]]);
+    const number = value => value.toLocaleString("zh-TW");
+    const maxValue = Math.max(...ageData.flatMap(row => row.slice(1)));
+    const bars = document.querySelector("#bars");
+    bars.innerHTML = ageData.map(([age, male, female]) => `<div class="bar-row"><span class="bar-label">${age}</span><div><div class="bar-track"><span class="bar male" style="width:${male / maxValue * 100}%" title="男性 ${number(male)} 人"></span><span class="bar female" style="width:${female / maxValue * 100}%" title="女性 ${number(female)} 人"></span></div><div class="bar-value"><span>${number(male)}</span><span>${number(female)}</span></div></div></div>`).join("");
+    document.querySelector("#data-table").innerHTML = records.map(([area, field, value]) => `<tr data-sex="${field[0]}" data-name="${field.toLowerCase()}"><td>${area}</td><td>${field}</td><td>${number(value)}</td></tr>`).join("");
+    const updateTable = () => {
+      const keyword = document.querySelector("#search").value.trim().toLowerCase();
+      const activeFilter = document.querySelector("button.filter.active").dataset.filter;
+      let visible = 0;
+      document.querySelectorAll("#data-table tr").forEach(row => {
+        const show = row.dataset.name.includes(keyword) && (activeFilter === "all" || row.dataset.sex === activeFilter);
+        row.hidden = !show;
+        if (show) visible += 1;
+      });
+      const existingEmpty = document.querySelector(".empty");
+      if (!visible && !existingEmpty) document.querySelector("#data-table").innerHTML = '<tr class="empty"><td colspan="3">沒有符合的欄位</td></tr>';
+      if (visible && existingEmpty) document.querySelector("#data-table").innerHTML = records.map(([area, field, value]) => `<tr data-sex="${field[0]}" data-name="${field.toLowerCase()}"><td>${area}</td><td>${field}</td><td>${number(value)}</td></tr>`).join("");
+    };
+    document.querySelector("#search").addEventListener("input", updateTable);
+    document.querySelectorAll("button.filter").forEach(button => button.addEventListener("click", () => { document.querySelectorAll("button.filter").forEach(item => item.classList.remove("active")); button.classList.add("active"); updateTable(); }));
+  </script>
+</body>
+</html>
